@@ -18,7 +18,11 @@ cd LinkedIn_Automation
 - Use IDERunner for now, I will setup running using CLI later 
 
 #### TODO:
-- [x] Auto connect people from user's industry.
-- [ ] Finish Auto apply resumes from Jobs section.
 - [ ] Auto connect with people in the company that applied including message.
 - [ ] Auto sending message to people connected (Consider...)
+
+#### In progress:
+- [ ] Finish Auto apply resumes from Jobs section.
+
+#### Done:
+- [x] Auto connect people from user's industry.
