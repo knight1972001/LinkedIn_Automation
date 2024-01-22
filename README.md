@@ -18,7 +18,7 @@ cd LinkedIn_Automation
 - Use IDERunner for now, I will setup running using CLI later 
 
 #### TODO:
-- [ ] Auto connect with people in the company that applied including message.
+
 - [ ] Auto sending message to people connected (Consider...)
 
 #### In progress:
@@ -26,3 +26,9 @@ cd LinkedIn_Automation
 
 #### Done:
 - [x] Auto connect people from user's industry.
+![no-more-new-connection.png](diary-pic%2Fno-more-new-connection.png)
+
+![no-more-new-connection-2.png](diary-pic%2Fno-more-new-connection-2.png)
+
+- [x] Auto connect with people in the company that applied including message.
+![sent-connection.png](diary-pic%2Fsent-connection.png)

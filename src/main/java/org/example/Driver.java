@@ -1,47 +1,28 @@
 package org.example;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Set;
 
-public class Driver {
-    WebDriver driver;
-
-    public Driver() {
-        System.setProperty("webdriver.chrome.driver", "C:\\LinkedIn_Automation\\LinkedIn\\chromedriver-win64\\chromedriver.exe");
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("user-data-dir=C:/Users/knigh/AppData/Local/Google/Chrome/User Data");
-        options.addArguments("--start-maximized");
-        driver = new ChromeDriver(options);
-    }
-
-    public WebDriver getDrive() {
-        return driver;
-    }
-
-    public void navigateTo(String link) {
-        this.driver.get(link);
-    }
+public class Driver extends Browser{
 
     public void implicitWait(Integer time) {
-        this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(time));
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(time));
     }
 
-    public WebElement getElementByClassName(String className) {
-        return this.driver.findElement(By.className(className));
+    public WebElement getElementByClassName(WebElement element, String className) {
+        return element.findElement(By.className(className));
     }
 
     public WebElement getElementByCss(String cssSelector) {
         try {
-            Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+            Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(20));
             return wait.until(d -> d.findElement(By.cssSelector(cssSelector)));
         } catch (Exception e) {
             System.out.println("Cannot find Element: " + e);
@@ -49,9 +30,9 @@ public class Driver {
         }
     }
 
-    public WebElement getElementById(String id) {
+    public WebElement getElementById(WebElement element, String id) {
         try {
-            Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+            Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(20));
             return wait.until(d -> d.findElement(By.id(id)));
         } catch (Exception e) {
             System.out.println("Cannot find Element: " + e);
@@ -59,68 +40,204 @@ public class Driver {
         }
     }
 
-    public WebElement getElementByLinkName(String linkName) {
+    public WebElement getElementByLinkText(WebElement element,String linkText) {
         try {
-            Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-            return wait.until(d -> d.findElement(By.linkText(linkName)));
+            Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+            return wait.until(d -> element.findElement(By.linkText(linkText)));
         } catch (Exception e) {
-            System.out.println("Cannot find Element: " + e);
+            System.out.println("Cannot find Element: " + e + ". linkText error: " + linkText);
             return null;
         }
+    }
 
+    public Boolean isVisibleByLinkText(String linkText){
+        Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        try {
+            wait.until(driver -> driver.findElement(By.linkText(linkText)));
+            return true;
+        } catch (Exception e) {
+            System.out.println("Cannot find Element: " + e + ". linkText error: " + linkText);
+            return false;
+        }
     }
 
 
-    public WebElement getElementByName(String name) {
-        return this.driver.findElement(By.name(name));
+    public WebElement getElementByLinkText(String linkText) {
+        try{
+            return driver.findElement(By.linkText(linkText));
+        }catch (Exception e){
+            System.out.println("Cannot get linkText: "+ linkText);
+            return null;
+        }
     }
 
-    public WebElement getElementByTagName(String tag) {
-        return this.driver.findElement(By.tagName(tag));
+    public WebElement getElementByName(WebElement element,String name) {
+        return element.findElement(By.name(name));
+    }
+
+    public WebElement getElementByTagName(WebElement element,String tag) {
+        try{
+            return element.findElement(By.tagName(tag));
+        }catch (Exception e){
+            System.out.println("Cannot get tag name: "+ tag);
+            return null;
+        }
+    }
+
+    public WebElement getElementByXpath(WebElement parentElement, String xpath) {
+        try{
+            return parentElement.findElement(By.xpath(xpath));
+        }catch (Exception e){
+            System.out.println("Cannot get xpath: "+ xpath + " using element");
+            return null;
+        }
+    }
+
+    public Boolean isVisibleByXpath(WebElement parentElement, String xpath) {
+        Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        try {
+            wait.until(driver -> parentElement.findElement(By.xpath(xpath)));
+            return true;
+        } catch (Exception e) {
+            System.out.println("Cannot find Element: " + e + ". Xpath error: " + xpath);
+            return false;
+        }
+    }
+    public Boolean isVisibleByXpath(String xpath) {
+        Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        try {
+            wait.until(driver -> driver.findElement(By.xpath(xpath)));
+            return true;
+        } catch (Exception e) {
+            System.out.println("Cannot find Element: " + e);
+            return false;
+        }
     }
 
     public WebElement getElementByXpath(String xpath) {
-        try {
-            Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-            return wait.until(d -> d.findElement(By.xpath(xpath)));
-        } catch (Exception e) {
-            System.out.println("Cannot find Element: " + e);
+        try{
+            return driver.findElement(By.xpath(xpath));
+        }catch (Exception e){
+            System.out.println("Cannot get xpath: "+ xpath);
             return null;
         }
     }
 
-    public void clickElement(WebElement element){
-        try{
+    public void clickElement(WebElement element) {
+        try {
             explicitWaitIsDisplayed(element);
             element.click();
-        }catch(Exception e){
-            System.out.println("Cannot found Element: "+element);
+        } catch (Exception e) {
+            System.out.println("Cannot found Element: " + element);
         }
     }
 
-    public void sendKeys(WebElement element, String content){
-        element.sendKeys(content);
+    public void clickElementByXpath(WebElement element, String xpath) {
+        if(isVisibleByXpath(element,xpath)){
+            WebElement obj = getElementByXpath(element, xpath);
+            clickElement(obj);
+        }
     }
 
-    public void clearField(WebElement element){
+    public void clickElementByElementInNewTab(WebElement element){
+        if(explicitWaitIsDisplayed(element)){
+            // Create an Actions object
+            Actions actions = new Actions(driver);
+
+            // Hold down the Ctrl key and click on the element
+            actions.keyDown(org.openqa.selenium.Keys.CONTROL)
+                    .click(element)
+                    .keyUp(org.openqa.selenium.Keys.CONTROL)
+                    .build()
+                    .perform();
+        }
+    }
+
+    public void switchToNextTab() {
+        // Get the current window handle
+        String currentWindowHandle = driver.getWindowHandle();
+
+        // Get all window handles
+        Set<String> allWindowHandles = driver.getWindowHandles();
+
+        // Find the handle of the current tab
+        String currentTabHandle = null;
+        for (String windowHandle : allWindowHandles) {
+            if (!windowHandle.equals(currentWindowHandle)) {
+                currentTabHandle = windowHandle;
+                break;
+            }
+        }
+
+        // Switch to the next tab using JavaScript
+        if (currentTabHandle != null) {
+            ((JavascriptExecutor) driver).executeScript("window.focus();");
+            driver.switchTo().window(currentTabHandle);
+        }
+    }
+
+    public void switchToFirstTab() {
+        // Get the handles of all open windows or tabs
+        Set<String> windowHandles = driver.getWindowHandles();
+
+        // Switch to the first window handle
+        String firstTabHandle = windowHandles.toArray()[0].toString();
+        driver.switchTo().window(firstTabHandle);
+    }
+
+    public void closeCurrentTab(){
+        getDriver().close();
+    }
+
+    public void scrollToPageEnd() {
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) getDriver();
+
+        // Execute JavaScript to scroll to the end of the page
+        jsExecutor.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    }
+
+    public void clickElementByXpath(String xpath) {
+        if(isVisibleByXpath(xpath)){
+            WebElement obj = getElementByXpath(xpath);
+            clickElement(obj);
+        }
+    }
+
+    public void clickElementByLinkText(String linkText) {
+        if(isVisibleByLinkText(linkText)){
+            WebElement obj = getElementByLinkText(linkText);
+            clickElement(obj);
+        }
+    }
+
+    public void enterTextByXpath(String xpath, String content) {
+        if(isVisibleByXpath(xpath)){
+            WebElement element = getElementByXpath(xpath);
+            element.sendKeys(content);
+        }
+    }
+
+    public void clearField(WebElement element) {
         element.clear();
     }
 
-    public void explicitWaitIsDisplayed(WebElement element){
-        Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(d -> element.isDisplayed());
+    public Boolean explicitWaitIsDisplayed(WebElement element) {
+        try{
+            Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(5));
+            wait.until(d -> element.isDisplayed());
+            return true;
+        }catch (Exception e){
+            System.out.println("Element not found: "+e.getMessage());
+            return false;
+        }
     }
 
-    public List<WebElement> loadLiTags(WebElement webElement){
-        WebDriverWait wait = new WebDriverWait(this.driver, Duration.ofSeconds(10));
+    public List<WebElement> loadLiTags(WebElement webElement) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
         List<WebElement> liElements = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(".//li[not(ancestor::li)]")));
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(".//li[not(ancestor::li)]"), liElements.size()));
 
         return liElements;
-    }
-
-    public void quit(){
-        driver.quit();
     }
 }
 
