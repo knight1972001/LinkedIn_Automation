@@ -37,16 +37,17 @@ public class Utils {
     }
 
     public static int extractNumber(String input) {
-        // Define a pattern to match numbers
-        Pattern pattern = Pattern.compile("\\d+");
+        // Define a pattern to match numbers with optional commas
+        Pattern pattern = Pattern.compile("\\d{1,3}(,\\d{3})*");
 
         // Create a matcher for the input string
         Matcher matcher = pattern.matcher(input);
 
         // Find the first match (assuming there is at least one number)
         if (matcher.find()) {
-            // Parse and return the matched number
-            return Integer.parseInt(matcher.group());
+            // Remove commas and parse the matched number
+            String matchedNumber = matcher.group().replaceAll(",", "");
+            return Integer.parseInt(matchedNumber);
         } else {
             // Return a default value or throw an exception if no number is found
             return -1;  // Default value (-1) or throw an exception

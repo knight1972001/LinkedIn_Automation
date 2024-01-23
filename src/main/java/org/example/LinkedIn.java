@@ -291,19 +291,27 @@ public class LinkedIn {
                     if (Utils.isValidString(li.getText(), hiringPosition)) {
 //                        System.out.println("Text of <li>: " + li.getText());
 //                        System.out.println("VALID");
-                        WebElement nameCard = driver.getElementByXpath(li, ".//div[1]/section[1]/div[1]/div[1]/div[2]/div[1]/a[1]/div[1]");
+                        if (driver.isVisibleByXpath(li, ".//div[1]/section[1]/div[1]/div[1]/div[2]/div[1]/a[1]/div[1]")) {
+                            WebElement nameCard = driver.getElementByXpath(li, ".//div[1]/section[1]/div[1]/div[1]/div[2]/div[1]/a[1]/div[1]");
 //                        System.out.println(nameCard.getText().split(" ")[0]);
-                        String name = nameCard.getText().split(" ")[0];
-                        String note = "Dear " + name + ";\n" +
-                                "I'm writing to express my interest in the " + jobTitleText + " position at " + companyNameText + ". I've already applied through LinkedIn and would like to bring my application here to your attention. If you want to discuss this further, don't hesitate to contact me\n" +
-                                "Thank you\n" +
-                                "Long";
-                        connectToProfile(li, note, name);
+                            String name = nameCard.getText().split(" ")[0];
+                            String note = "Dear " + name + ";\n" +
+                                    "I'm writing to express my interest in the " + jobTitleText + " position at " + companyNameText + ". I've already applied through LinkedIn and would like to bring my application here to your attention. If you want to discuss this further, don't hesitate to contact me\n" +
+                                    "Thank you\n" +
+                                    "Long";
+
+                            // getting Exactly Member profile Link
+                            WebElement memberProfile = driver.getElementByXpath(li, ".//div[1]/section[1]/div[1]/div[1]/div[2]/div[1]");
+
+                            connectToProfile(memberProfile, note, name);
+                        } else {
+                            System.out.println("Cannot click to member page due to privacy from LinkedIn");
+                        }
                     }
                 }
             }
         } catch (Exception e) {
-            System.out.println("Error from goToCompanyLinkedIn(): " + e.getMessage());
+            System.out.println("Error from connectCompanyMember(): " + e.getMessage());
         }
     }
 
@@ -314,21 +322,21 @@ public class LinkedIn {
         // Perform on the second tab.
         // Waiting to new page loading
         try {
-            Thread.sleep(3000);
+            Thread.sleep(4000);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         // Detect Connect button
         WebElement main = driver.getElementByXpath("//main[@class='scaffold-layout__main']");
-        WebElement buttonMenu = driver.getElementByXpath(main, ".//section[1]/div[2]/div[3]");
+        WebElement buttonMenu = driver.getElementByXpath(main, ".//section[1]/div[2]/div[3]/div[1]");
 
         // check if already connected
         // click More Button
-        WebElement dropdownMenu = driver.getElementByXpath(buttonMenu, ".//div[1]/div[2]");
-        driver.clickElementByXpath(buttonMenu, ".//div[1]/div[2]");
+        driver.clickElementByXpath(buttonMenu, ".//span[text()='More']");
         // scan text
-        WebElement insideMenu = driver.getElementByXpath(dropdownMenu, ".//div[1]");
-        if (buttonMenu.getText().contains("Connect") || insideMenu.getText().contains("Connect")) {
+        WebElement dropdownMenu = driver.getElementByXpath(buttonMenu, ".//div[.//span[text()='More']]");
+        if (buttonMenu.getText().contains("Connect") || dropdownMenu.getText().contains("Connect")) {
             if (buttonMenu.getText().contains("Connect")) {
                 // if button Menu is show outside dropdown
                 driver.clickElementByXpath(buttonMenu, ".//span[text()='Connect']");

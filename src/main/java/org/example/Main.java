@@ -1,9 +1,6 @@
 package org.example;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -17,10 +14,11 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         Driver driver = new Driver();
         LinkedIn linkedIn = new LinkedIn(driver);
-        driver.navigateTo("https://www.linkedin.com/");
+        driver.navigateTo("https://www.linkedin.com/in/andrew-bruno-0b87704b/");
 //        linkedIn.connect_more_people_in_industry();
 
         linkedIn.connect_people_using_applied_link();
+
     }
 
 

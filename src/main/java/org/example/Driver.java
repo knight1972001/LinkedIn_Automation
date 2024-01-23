@@ -142,14 +142,28 @@ public class Driver extends Browser{
     public void clickElementByElementInNewTab(WebElement element){
         if(explicitWaitIsDisplayed(element)){
             // Create an Actions object
-            Actions actions = new Actions(driver);
+            Actions actions = new Actions(getDriver());
 
             // Hold down the Ctrl key and click on the element
-            actions.keyDown(org.openqa.selenium.Keys.CONTROL)
+            actions.keyDown(Keys.CONTROL)
                     .click(element)
-                    .keyUp(org.openqa.selenium.Keys.CONTROL)
+                    .keyUp(Keys.CONTROL)
                     .build()
                     .perform();
+        }
+    }
+
+    public void clickElementByElementInNewTab2(WebElement element){
+        // Get the target attribute value
+        String targetAttributeValue = element.getAttribute("target");
+
+        // If the target attribute is not set or is set to "_blank", click the link
+        if (targetAttributeValue == null || "_blank".equals(targetAttributeValue.trim().toLowerCase())) {
+            element.click();
+        } else {
+            // If the target attribute is set to something other than "_blank", handle as needed
+            System.out.println("Link is configured to open in a specific target: " + targetAttributeValue);
+            // You can choose to handle it differently based on your requirements
         }
     }
 
