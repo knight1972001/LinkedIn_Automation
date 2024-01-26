@@ -206,7 +206,6 @@ public class LinkedIn {
             // get content
             WebElement main = driver.getElementByXpath("//main[@id='main']");
 
-
             // get job title
             WebElement jobTitle = driver.getElementByXpath("//span[@class='job-details-jobs-unified-top-card__job-title-link']");
 //            System.out.println(jobTitle.getText());
@@ -287,11 +286,12 @@ public class LinkedIn {
 
                 List<WebElement> liElements = ulMemberList.findElements(By.xpath(".//li[not(ancestor::li)]"));
                 // check each member
+                int requestSentCount = 0; // limit send to 5 members each company.
                 for (WebElement li : liElements) {
                     if (Utils.isValidString(li.getText(), hiringPosition)) {
 //                        System.out.println("Text of <li>: " + li.getText());
 //                        System.out.println("VALID");
-                        if (driver.isVisibleByXpath(li, ".//div[1]/section[1]/div[1]/div[1]/div[2]/div[1]/a[1]/div[1]")) {
+                        if (driver.isVisibleByXpath(li, ".//div[1]/section[1]/div[1]/div[1]/div[2]/div[1]/a[1]/div[1]") && requestSentCount <=5) {
                             WebElement nameCard = driver.getElementByXpath(li, ".//div[1]/section[1]/div[1]/div[1]/div[2]/div[1]/a[1]/div[1]");
 //                        System.out.println(nameCard.getText().split(" ")[0]);
                             String name = nameCard.getText().split(" ")[0];
@@ -304,6 +304,7 @@ public class LinkedIn {
                             WebElement memberProfile = driver.getElementByXpath(li, ".//div[1]/section[1]/div[1]/div[1]/div[2]/div[1]");
 
                             connectToProfile(memberProfile, note, name);
+                            requestSentCount++;
                         } else {
                             System.out.println("Cannot click to member page due to privacy from LinkedIn");
                         }
@@ -336,9 +337,9 @@ public class LinkedIn {
         driver.clickElementByXpath(buttonMenu, ".//span[text()='More']");
         // scan text
         WebElement dropdownMenu = driver.getElementByXpath(buttonMenu, ".//div[.//span[text()='More']]");
-        if (buttonMenu.getText().contains("Connect") || dropdownMenu.getText().contains("Connect")) {
+        if ((buttonMenu.getText().contains("Connect") && !buttonMenu.getText().contains("Connection")) || (dropdownMenu.getText().contains("Connect") && !dropdownMenu.getText().contains("Connection"))) {
             if (buttonMenu.getText().contains("Connect")) {
-                // if button Menu is show outside dropdown
+                // if button Menu is show outside dropdown\
                 driver.clickElementByXpath(buttonMenu, ".//span[text()='Connect']");
             } else {
                 // if button Menu is show inside dropdown

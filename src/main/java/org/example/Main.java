@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         Driver driver = new Driver();
         LinkedIn linkedIn = new LinkedIn(driver);
-        driver.navigateTo("https://www.linkedin.com/in/andrew-bruno-0b87704b/");
+        driver.navigateTo("https://www.linkedin.com");
 //        linkedIn.connect_more_people_in_industry();
 
         linkedIn.connect_people_using_applied_link();
