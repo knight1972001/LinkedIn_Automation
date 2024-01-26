@@ -22,7 +22,10 @@ cd LinkedIn_Automation
 - [ ] Auto sending message to people connected (Consider...)
 
 #### In progress:
-- [ ] Finish Auto apply resumes from Jobs section.
+- [ ] Connect people from company Indeed Platform
+
+#### Cancelled:
+- [&#x2612] Finish Auto apply resumes from Jobs section.
 
 #### Done:
 - [x] Auto connect people from user's industry.
