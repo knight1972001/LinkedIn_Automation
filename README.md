@@ -25,7 +25,7 @@ cd LinkedIn_Automation
 - [ ] Connect people from company Indeed Platform
 
 #### Cancelled:
-- ❌ Auto apply resumes from Jobs section (due to various job platforms)
+❌ Auto apply resumes from Jobs section (due to various job platforms)
 
 #### Done:
 - [x] Auto connect people from user's industry.
