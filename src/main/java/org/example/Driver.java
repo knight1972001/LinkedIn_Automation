@@ -10,7 +10,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Set;
 
-public class Driver extends Browser{
+public class Driver extends Browser {
 
     public void implicitWait(Integer time) {
         getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(time));
@@ -40,7 +40,7 @@ public class Driver extends Browser{
         }
     }
 
-    public WebElement getElementByLinkText(WebElement element,String linkText) {
+    public WebElement getElementByLinkText(WebElement element, String linkText) {
         try {
             Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
             return wait.until(d -> element.findElement(By.linkText(linkText)));
@@ -50,7 +50,7 @@ public class Driver extends Browser{
         }
     }
 
-    public Boolean isVisibleByLinkText(String linkText){
+    public Boolean isVisibleByLinkText(String linkText) {
         Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
         try {
             wait.until(driver -> driver.findElement(By.linkText(linkText)));
@@ -63,32 +63,32 @@ public class Driver extends Browser{
 
 
     public WebElement getElementByLinkText(String linkText) {
-        try{
+        try {
             return driver.findElement(By.linkText(linkText));
-        }catch (Exception e){
-            System.out.println("Cannot get linkText: "+ linkText);
+        } catch (Exception e) {
+            System.out.println("Cannot get linkText: " + linkText);
             return null;
         }
     }
 
-    public WebElement getElementByName(WebElement element,String name) {
+    public WebElement getElementByName(WebElement element, String name) {
         return element.findElement(By.name(name));
     }
 
-    public WebElement getElementByTagName(WebElement element,String tag) {
-        try{
+    public WebElement getElementByTagName(WebElement element, String tag) {
+        try {
             return element.findElement(By.tagName(tag));
-        }catch (Exception e){
-            System.out.println("Cannot get tag name: "+ tag);
+        } catch (Exception e) {
+            System.out.println("Cannot get tag name: " + tag);
             return null;
         }
     }
 
     public WebElement getElementByXpath(WebElement parentElement, String xpath) {
-        try{
+        try {
             return parentElement.findElement(By.xpath(xpath));
-        }catch (Exception e){
-            System.out.println("Cannot get xpath: "+ xpath + " using element");
+        } catch (Exception e) {
+            System.out.println("Cannot get xpath: " + xpath + " using element");
             return null;
         }
     }
@@ -103,6 +103,7 @@ public class Driver extends Browser{
             return false;
         }
     }
+
     public Boolean isVisibleByXpath(String xpath) {
         Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
         try {
@@ -115,10 +116,10 @@ public class Driver extends Browser{
     }
 
     public WebElement getElementByXpath(String xpath) {
-        try{
+        try {
             return driver.findElement(By.xpath(xpath));
-        }catch (Exception e){
-            System.out.println("Cannot get xpath: "+ xpath);
+        } catch (Exception e) {
+            System.out.println("Cannot get xpath: " + xpath);
             return null;
         }
     }
@@ -133,14 +134,14 @@ public class Driver extends Browser{
     }
 
     public void clickElementByXpath(WebElement element, String xpath) {
-        if(isVisibleByXpath(element,xpath)){
+        if (isVisibleByXpath(element, xpath)) {
             WebElement obj = getElementByXpath(element, xpath);
             clickElement(obj);
         }
     }
 
-    public void clickElementByElementInNewTab(WebElement element){
-        if(explicitWaitIsDisplayed(element)){
+    public void clickElementByElementInNewTab(WebElement element) {
+        if (explicitWaitIsDisplayed(element)) {
             // Create an Actions object
             Actions actions = new Actions(getDriver());
 
@@ -153,7 +154,7 @@ public class Driver extends Browser{
         }
     }
 
-    public void clickElementByElementInNewTab2(WebElement element){
+    public void clickElementByElementInNewTab2(WebElement element) {
         // Get the target attribute value
         String targetAttributeValue = element.getAttribute("target");
 
@@ -199,7 +200,7 @@ public class Driver extends Browser{
         driver.switchTo().window(firstTabHandle);
     }
 
-    public void closeCurrentTab(){
+    public void closeCurrentTab() {
         getDriver().close();
     }
 
@@ -211,24 +212,29 @@ public class Driver extends Browser{
     }
 
     public void clickElementByXpath(String xpath) {
-        if(isVisibleByXpath(xpath)){
+        if (isVisibleByXpath(xpath)) {
             WebElement obj = getElementByXpath(xpath);
             clickElement(obj);
         }
     }
 
     public void clickElementByLinkText(String linkText) {
-        if(isVisibleByLinkText(linkText)){
+        if (isVisibleByLinkText(linkText)) {
             WebElement obj = getElementByLinkText(linkText);
             clickElement(obj);
         }
     }
 
     public void enterTextByXpath(String xpath, String content) {
-        if(isVisibleByXpath(xpath)){
+        if (isVisibleByXpath(xpath)) {
             WebElement element = getElementByXpath(xpath);
             element.sendKeys(content);
         }
+    }
+
+    public void enterTextByElementAndEnter(WebElement webElement, String content) {
+        webElement.sendKeys(content);
+        webElement.sendKeys(Keys.ENTER);
     }
 
     public void clearField(WebElement element) {
@@ -236,12 +242,12 @@ public class Driver extends Browser{
     }
 
     public Boolean explicitWaitIsDisplayed(WebElement element) {
-        try{
+        try {
             Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(5));
             wait.until(d -> element.isDisplayed());
             return true;
-        }catch (Exception e){
-            System.out.println("Element not found: "+e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Element not found: " + e.getMessage());
             return false;
         }
     }

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class LinkedIn {
 
-    Driver driver;
+    public Driver driver;
 
     List<String> relatePosition = new ArrayList<String>();
     List<String> hiringPosition = new ArrayList<String>();
@@ -189,7 +189,7 @@ public class LinkedIn {
 
     public void connect_people_using_applied_link() {
         // get all the link
-        List<String> links = Utils.getAllTheAppliedLink();
+        List<String> links = Utils.getAllLinkedInLink();
 
         int count = 1;
         for (String link : links) {
@@ -247,19 +247,27 @@ public class LinkedIn {
                 String companyNameText = companyName.getText();
                 driver.clickElementByXpath(secondDiv, ".//div/a");
 
-                // Waiting to page loaded
-                Thread.sleep(5000);
 
-                WebElement companyNavigation = driver.getElementByXpath("//nav[@aria-label='Organization’s page navigation']");
+
+                onTheCompanySite(jobTitleText, companyNameText);
+            }
+        } catch (Exception e) {
+            System.out.println("Error from connectCompanyMember(): " + e.getMessage());
+        }
+    }
+
+    public void onTheCompanySite(String jobTitleText, String companyNameText){
+        try{
+            // Waiting to page loaded
+            Thread.sleep(5000);
+            WebElement companyNavigation = driver.getElementByXpath("//nav[@aria-label='Organization’s page navigation']");
+
+            if (driver.isVisibleByXpath(companyNavigation, ".//a[text()='People']")) {
                 // click to people tab
                 driver.clickElementByXpath(companyNavigation, ".//a[text()='People']");
 
                 // Waiting to page loaded
                 Thread.sleep(5000);
-
-//                WebElement associatedMemberBox = driver.getElementByXpath("//div[@class='artdeco-card org-people__card-margin-bottom']");
-//                // expand box
-//                driver.clickElementByXpath(associatedMemberBox, ".//button[text()='Show more']");
 
                 // Load members
                 WebElement associatedMemberBox = driver.getElementByXpath("//div[@class='artdeco-card org-people__card-margin-bottom']");
@@ -294,7 +302,7 @@ public class LinkedIn {
                     if (Utils.isValidString(li.getText(), hiringPosition)) {
 //                        System.out.println("Text of <li>: " + li.getText());
 //                        System.out.println("VALID");
-                        if (driver.isVisibleByXpath(li, ".//div[1]/section[1]/div[1]/div[1]/div[2]/div[1]/a[1]/div[1]") && requestSentCount <=5) {
+                        if (driver.isVisibleByXpath(li, ".//div[1]/section[1]/div[1]/div[1]/div[2]/div[1]/a[1]/div[1]") && requestSentCount <= 5) {
                             WebElement nameCard = driver.getElementByXpath(li, ".//div[1]/section[1]/div[1]/div[1]/div[2]/div[1]/a[1]/div[1]");
 //                        System.out.println(nameCard.getText().split(" ")[0]);
                             String name = nameCard.getText().split(" ")[0];
@@ -309,13 +317,20 @@ public class LinkedIn {
                             connectToProfile(memberProfile, note, name);
                             requestSentCount++;
                         } else {
+                            if (requestSentCount > 5) {
+                                System.out.println("Reached maximum 5 people in this company");
+                                break;
+                            }
                             System.out.println("Cannot click to member page due to privacy from LinkedIn");
                         }
                     }
                 }
+            } else {
+                System.out.println("Cannot detected people tab from this company. Skipping...");
             }
-        } catch (Exception e) {
-            System.out.println("Error from connectCompanyMember(): " + e.getMessage());
+        }
+        catch (Exception e){
+            System.out.println("Error from onTheCompanySite(): " + e.getMessage());
         }
     }
 

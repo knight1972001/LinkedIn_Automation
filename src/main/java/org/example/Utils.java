@@ -18,10 +18,28 @@ public class Utils {
         return false;
     }
 
-    public static List<String> getAllTheAppliedLink(){
+    public static List<String> getAllLinkedInLink(){
         List<String> links = new ArrayList<String>();
 
-        String path_file = "data/applied-links.txt";
+        String path_file = "data/linkedIn-link.txt";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(path_file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Add each line to the linked list
+                links.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return links;
+    }
+
+    public static List<String> getAllIndeedLink(){
+        List<String> links = new ArrayList<String>();
+
+        String path_file = "data/indeed-link.txt";
 
         try (BufferedReader br = new BufferedReader(new FileReader(path_file))) {
             String line;
@@ -51,6 +69,17 @@ public class Utils {
         } else {
             // Return a default value or throw an exception if no number is found
             return -1;  // Default value (-1) or throw an exception
+        }
+    }
+
+    public static String subtractStrings(String text1, String text2) {
+        // Check if text2 is a suffix of text1
+        if (text1.endsWith(text2)) {
+            // Remove text2 from the end of text1
+            return text1.substring(0, text1.length() - text2.length()).trim();
+        } else {
+            // No subtraction possible, return the original text1
+            return text1;
         }
     }
 }
