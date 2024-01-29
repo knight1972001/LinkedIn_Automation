@@ -35,6 +35,9 @@ public class LinkedIn {
         hiringPosition.add("Senior Software");
         hiringPosition.add("Senior Developer");
         hiringPosition.add("Senior Technical");
+        hiringPosition.add("Sr. IT/Program Manger");
+        hiringPosition.add("Director, Development and Quality Assurance");
+        hiringPosition.add("Manager, Systems Development and Testing");
         hiringPosition.add("Tech Lead");
     }
 
