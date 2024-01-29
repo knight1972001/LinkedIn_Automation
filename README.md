@@ -4,11 +4,11 @@
 Are you tired of the traditional job hunting methods that seem to go unnoticed? 🕵️‍♂️ Introducing my groundbreaking project – LinkedIn Automation, designed to revolutionize the way you network and boost your job application success rate! 🌐💼
 
 ## 🚀 Key Highlights:
-1. Massive Industry Connections: Witness the power of automation as I leverage Java and Selenium to exponentially expand my network with professionals in our shared industry. 🌐✨
-2. Targeted Messaging for Job Applications: Uncover the secret sauce to capturing the attention of decision-makers! My project sends personalized messages to individuals at companies I've applied to, strategically increasing the chances of landing that dream job. 💌💻
-3. Java and Selenium Magic: Marvel at the technical prowess of Java and Selenium working seamlessly together to create a robust and efficient automation solution. 🚀💻
-4. Elevate Your Job Application Visibility: Stand out from the crowd! Watch as my automated interactions bring heightened attention to my job applications, paving the way for success in the competitive job market. 📈🔍
-5. Efficiency Redefined: Say goodbye to manual networking hassles! My project automates routine tasks, freeing up time for more strategic job search endeavors. 🕒⚙️
+1. **Massive Industry Connections:** Witness the power of automation as I leverage Java and Selenium to exponentially expand my network with professionals in our shared industry. 🌐✨
+2. **Targeted Messaging for Job Applications:** Uncover the secret sauce to capturing the attention of decision-makers! My project sends personalized messages to individuals at companies I've applied to, strategically increasing the chances of landing that dream job. 💌💻
+3. **Java and Selenium Magic:** Marvel at the technical prowess of Java and Selenium working seamlessly together to create a robust and efficient automation solution. 🚀💻
+4. **Elevate Your Job Application Visibility:** Stand out from the crowd! Watch as my automated interactions bring heightened attention to my job applications, paving the way for success in the competitive job market. 📈🔍
+5. **Efficiency Redefined:** Say goodbye to manual networking hassles! My project automates routine tasks, freeing up time for more strategic job search endeavors. 🕒⚙️
 
 ## 👀 Why You Should Use:
   - 🤝 Witness the power of automated connections.
@@ -39,7 +39,7 @@ cd LinkedIn_Automation
 - [ ] Auto sending message to people connected (Consider...)
 
 #### In progress:
-- [ ] Building CLI to release version 1.0
+- [ ] Building **CLI** to **release** version 1.0
 
 #### Cancelled:
 ❌ Auto apply resumes from Jobs section (due to various job platforms)
