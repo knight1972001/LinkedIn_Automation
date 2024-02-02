@@ -49,6 +49,10 @@ cd LinkedIn_Automation
 - [x] Auto connect with people in the company that applied including message.
 - [x] Connect people from company Indeed Platform (**last update Jan29th**)
 
+### Demo: 
+[![Watch the demo](https://img.youtube.com/vi/oFUitd6hnSo/0.jpg)](https://www.youtube.com/watch?v=oFUitd6hnSo)
+
+
 ![no-more-new-connection.png](diary-pic%2Fno-more-new-connection.png)
 ![no-more-new-connection-2.png](diary-pic%2Fno-more-new-connection-2.png)
 ![sent-connection.png](diary-pic%2Fsent-connection.png)
