@@ -1,0 +1,15 @@
+F1: Request to connect
+Dear Maryam
+I'm writing to express my interest in the Software Developer position at The Driving Force Group of Companies. I've already applied through LinkedIn and would like to bring my application here to your attention. If you want to discuss this further, don't hesitate to contact me.
+Regards
+Long
+
+F2:
+
+Hi Curtis! Thank you for accepting my connection request. I saw SDET (Software Developer Engineer in Test) job posting from 2 weeks ago and I am currently doing a bit of research on the role to see whether I'd be a good fit.
+
+Would you happen to know anyone on the team I could have a casual chat with to better understand the position?
+
+As a fellow working in the tech space myself, I'd love to learn more about the day-to-day and team culture before I bother you with specific questions on the application process or more opportunities at Priceline.
+
+Thank you!

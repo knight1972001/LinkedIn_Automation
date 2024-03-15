@@ -11,6 +11,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.example.Utils.*;
+
 public class LinkedIn {
 
     public Driver driver;
@@ -39,6 +41,15 @@ public class LinkedIn {
         hiringPosition.add("Director, Development and Quality Assurance");
         hiringPosition.add("Manager, Systems Development and Testing");
         hiringPosition.add("Tech Lead");
+        hiringPosition.add("Senior Test");
+        hiringPosition.add("Software Development Manager");
+        hiringPosition.add("Senior Technology");
+        hiringPosition.add("Senior Software");
+        hiringPosition.add("Director of Engineering");
+        hiringPosition.add("Director Software Engineering");
+        hiringPosition.add("Engineering Manager");
+
+        System.out.println("Added database");
     }
 
     public Driver getDriver() {
@@ -194,7 +205,7 @@ public class LinkedIn {
         int count = 1;
         for (String link : links) {
             System.out.println("Link " + count);
-            connectCompanyMember(link);
+            connectCompanyMember(remakeUrlLinkedIn(link));
             count++;
         }
     }
@@ -206,58 +217,61 @@ public class LinkedIn {
             // Waiting to load site
             Thread.sleep(8000);
 
-            // get content
-            WebElement main = driver.getElementByXpath("//main[@id='main']");
-
-            // get job title
-            WebElement jobTitle = driver.getElementByXpath("//span[@class='job-details-jobs-unified-top-card__job-title-link']");
-//            System.out.println(jobTitle.getText());
-            String jobTitleText = jobTitle.getText();
-
-            if (driver.isVisibleByXpath(main, "//h2[text()='Meet the hiring team']")) {
-                System.out.println("Detected hiring team");
-
-                // Get member box and click
-                WebElement memberBox = driver.getElementByXpath("//div[@class='hirer-card__container']");
-                WebElement hiringTeam = driver.getElementByXpath(memberBox, ".//div[2]/a");
-                // Extract hiring team name
-                String name = hiringTeam.getText().split(" ")[0];
-
-                // Extract company name
-                WebElement jobSide = driver.getElementByXpath(main, ".//div[1]/div[2]");
-                WebElement secondDiv = driver.getElementByXpath(jobSide, "//div[@class='job-details-jobs-unified-top-card__primary-description-container']");
-                WebElement companyName = driver.getElementByXpath(secondDiv, ".//div/a");
-                String companyNameText = companyName.getText();
-
-                String note = "Dear " + name + ";\n" +
-                        "I'm writing to express my interest in the " + jobTitleText + " position at " + companyNameText + ". I've already applied through LinkedIn and would like to bring my application here to your attention. If you want to discuss this further, don't hesitate to contact me\n" +
-                        "Thank you\n" +
-                        "Long";
-
-                connectToProfile(hiringTeam, note, name);
+            if (driver.isVisibleByXpath("//h1[normalize-space()='No matching jobs found.']", 1)) {
+                System.out.println("Job out of date!");
             } else {
-                System.out.println("Not Detected hiring team");
-                // get job side (ignore menu job)
-                WebElement jobSide = driver.getElementByXpath(main, ".//div[1]/div[2]");
+                // get content
+                WebElement main = driver.getElementByXpath("//main[@id='main']");
 
-                // detect company Name
-                WebElement secondDiv = driver.getElementByXpath(jobSide, "//div[@class='job-details-jobs-unified-top-card__primary-description-container']");
-                // click to navigate to company
-                WebElement companyName = driver.getElementByXpath(secondDiv, ".//div/a");
-                String companyNameText = companyName.getText();
-                driver.clickElementByXpath(secondDiv, ".//div/a");
+                // get job title
+                WebElement jobTitle = driver.getElementByXpath("//span[@class='job-details-jobs-unified-top-card__job-title-link']");
+//            System.out.println(jobTitle.getText());
+                String jobTitleText = jobTitle.getText();
+
+                if (driver.isVisibleByXpath(main, "//h2[text()='Meet the hiring team']")) {
+                    System.out.println("Detected hiring team");
+
+                    // Get member box and click
+                    WebElement memberBox = driver.getElementByXpath("//div[@class='hirer-card__container']");
+                    WebElement hiringTeam = driver.getElementByXpath(memberBox, ".//div[2]/a");
+                    // Extract hiring team name
+                    String name = hiringTeam.getText().split(" ")[0];
+
+                    // Extract company name
+                    WebElement jobSide = driver.getElementByXpath(main, ".//div[1]/div[2]");
+                    WebElement secondDiv = driver.getElementByXpath(jobSide, "//div[@class='job-details-jobs-unified-top-card__primary-description-container']");
+                    WebElement companyName = driver.getElementByXpath(secondDiv, ".//div/a");
+                    String companyNameText = companyName.getText();
+
+                    String note = "Dear " + name + ";\n" +
+                            "I'm writing to express my interest in the " + jobTitleText + " position at " + companyNameText + ". I've already applied through LinkedIn and would like to bring my application here to your attention. If you want to discuss this further, don't hesitate to contact me\n" +
+                            "Thank you\n" +
+                            "Long";
+
+                    connectToProfile(hiringTeam, note, name);
+                } else {
+                    System.out.println("Not Detected hiring team");
+                    // get job side (ignore menu job)
+                    WebElement jobSide = driver.getElementByXpath(main, ".//div[1]/div[2]");
+
+                    // detect company Name
+                    WebElement secondDiv = driver.getElementByXpath(jobSide, "//div[@class='job-details-jobs-unified-top-card__primary-description-container']");
+                    // click to navigate to company
+                    WebElement companyName = driver.getElementByXpath(secondDiv, ".//div/a");
+                    String companyNameText = companyName.getText();
+                    driver.clickElementByXpath(secondDiv, ".//div/a");
 
 
-
-                onTheCompanySite(jobTitleText, companyNameText);
+                    onTheCompanySite(jobTitleText, companyNameText);
+                }
             }
         } catch (Exception e) {
             System.out.println("Error from connectCompanyMember(): " + e.getMessage());
         }
     }
 
-    public void onTheCompanySite(String jobTitleText, String companyNameText){
-        try{
+    public void onTheCompanySite(String jobTitleText, String companyNameText) {
+        try {
             // Waiting to page loaded
             Thread.sleep(5000);
             WebElement companyNavigation = driver.getElementByXpath("//nav[@aria-label='Organization’s page navigation']");
@@ -297,12 +311,13 @@ public class LinkedIn {
 
                 List<WebElement> liElements = ulMemberList.findElements(By.xpath(".//li[not(ancestor::li)]"));
                 // check each member
-                int requestSentCount = 0; // limit send to 5 members each company.
+                int requestSentCount = 0;
+                int maxRequestSent = 10; // limit send to 10 members each company
                 for (WebElement li : liElements) {
                     if (Utils.isValidString(li.getText(), hiringPosition)) {
 //                        System.out.println("Text of <li>: " + li.getText());
 //                        System.out.println("VALID");
-                        if (driver.isVisibleByXpath(li, ".//div[1]/section[1]/div[1]/div[1]/div[2]/div[1]/a[1]/div[1]") && requestSentCount <= 5) {
+                        if (driver.isVisibleByXpath(li, ".//div[1]/section[1]/div[1]/div[1]/div[2]/div[1]/a[1]/div[1]") && requestSentCount <= maxRequestSent) {
                             WebElement nameCard = driver.getElementByXpath(li, ".//div[1]/section[1]/div[1]/div[1]/div[2]/div[1]/a[1]/div[1]");
 //                        System.out.println(nameCard.getText().split(" ")[0]);
                             String name = nameCard.getText().split(" ")[0];
@@ -317,19 +332,19 @@ public class LinkedIn {
                             connectToProfile(memberProfile, note, name);
                             requestSentCount++;
                         } else {
-                            if (requestSentCount > 5) {
-                                System.out.println("Reached maximum 5 people in this company");
+                            if (requestSentCount > maxRequestSent) {
+                                System.out.println("Reached maximum "+maxRequestSent+" people in this company");
                                 break;
+                            }else{
+                                System.out.println("Cannot click to member page due to privacy from LinkedIn");
                             }
-                            System.out.println("Cannot click to member page due to privacy from LinkedIn");
                         }
                     }
                 }
             } else {
                 System.out.println("Cannot detected people tab from this company. Skipping...");
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Error from onTheCompanySite(): " + e.getMessage());
         }
     }

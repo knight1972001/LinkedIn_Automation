@@ -82,4 +82,76 @@ public class Utils {
             return text1;
         }
     }
+
+    public static String extractJobIdLinkedIn(String url){
+        // Regular expression pattern to match the job ID
+        String pattern = "currentJobId=(\\d+)";
+
+        // Create a Pattern object
+        Pattern r = Pattern.compile(pattern);
+
+        // Create Matcher object
+        Matcher m = r.matcher(url);
+
+        // Find the job ID
+        if (m.find()) {
+            String jobId = m.group(1);
+            return jobId;
+        } else {
+            return "";
+        }
+    }
+
+    public static String remakeUrlLinkedIn(String url){
+        String jobId = extractJobIdLinkedIn(url);
+
+        try{
+            if(!jobId.equals("")){
+                String newUrl = "https://www.linkedin.com/jobs/collections/recommended/?currentJobId="+jobId;
+                return newUrl;
+            }else{
+                throw new Exception("Job ID not found.");
+            }
+        }catch (Exception e){
+            System.out.println("An error occurred: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return jobId;
+    }
+
+    public static String extractJobIdIndeed(String url){
+        // Regular expression pattern to match the job ID
+        String pattern = "vjk=([a-zA-Z0-9]+)";
+
+        // Create a Pattern object
+        Pattern r = Pattern.compile(pattern);
+
+        // Create Matcher object
+        Matcher m = r.matcher(url);
+
+        // Find the job ID
+        if (m.find()) {
+            String jobId = m.group(1);
+            return jobId;
+        } else {
+            return "";
+        }
+    }
+
+    public static String remakeUrlIndeed(String url){
+        String jobId = extractJobIdIndeed(url);
+
+        try{
+            if(!jobId.equals("")){
+                String newUrl = "https://ca.indeed.com/jobs?q=QA+Automation+Engineer&vjk="+jobId;
+                return newUrl;
+            }else{
+                throw new Exception("Job ID not found.");
+            }
+        }catch (Exception e){
+            System.out.println("An error occurred: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return jobId;
+    }
 }

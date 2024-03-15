@@ -20,6 +20,10 @@ public class Driver extends Browser {
         return element.findElement(By.className(className));
     }
 
+    public WebElement getElementByClassName(String className) {
+        return driver.findElement(By.className(className));
+    }
+
     public WebElement getElementByCss(String cssSelector) {
         try {
             Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(20));
@@ -106,6 +110,17 @@ public class Driver extends Browser {
 
     public Boolean isVisibleByXpath(String xpath) {
         Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        try {
+            wait.until(driver -> driver.findElement(By.xpath(xpath)));
+            return true;
+        } catch (Exception e) {
+            System.out.println("Cannot find Element: " + e);
+            return false;
+        }
+    }
+
+    public Boolean isVisibleByXpath(String xpath, int time) {
+        Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(time));
         try {
             wait.until(driver -> driver.findElement(By.xpath(xpath)));
             return true;
@@ -233,8 +248,13 @@ public class Driver extends Browser {
     }
 
     public void enterTextByElementAndEnter(WebElement webElement, String content) {
-        webElement.sendKeys(content);
-        webElement.sendKeys(Keys.ENTER);
+        try{
+            webElement.sendKeys(content);
+            Thread.sleep(3000);
+            webElement.sendKeys(Keys.ENTER);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void clearField(WebElement element) {

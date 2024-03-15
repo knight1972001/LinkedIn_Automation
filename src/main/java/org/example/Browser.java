@@ -9,7 +9,7 @@ public class Browser {
     WebDriver driver;
 
     public Browser() {
-        System.setProperty("webdriver.chrome.driver", "C:\\LinkedIn_Automation\\LinkedIn\\chromedriver-win64\\chromedriver.exe");
+//        System.setProperty("webdriver.chrome.driver", "C:\\LinkedIn_Automation\\LinkedIn\\chromedriver-win64\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("user-data-dir=C:/Users/knigh/AppData/Local/Google/Chrome/User Data");
         options.addArguments("--start-maximized");

@@ -18,7 +18,7 @@ public class Main {
         driver.navigateTo("https://www.linkedin.com");
 //        linkedIn.connect_more_people_in_industry();
 
-//        linkedIn.connect_people_using_applied_link();
-        indeed.connect_people_using_applied_link();
+        linkedIn.connect_people_using_applied_link();
+//        indeed.connect_people_using_applied_link();
     }
 }
